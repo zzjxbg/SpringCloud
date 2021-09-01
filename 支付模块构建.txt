@@ -1,0 +1,23 @@
+1.浏览器对post请求不好支持,使用postman工具模拟
+2.自测通过
+
+支付模块:
+   1.建module
+   2.改pom
+   3.写yml
+   4.主启动
+   5.业务类
+
+业务类步骤:
+   1.建表SQL
+   2.entities
+     -主实体Payment
+     -Json封装体CommonResult
+   3.dao
+     -接口 PaymentDao
+     -mybatis映射文件 PaymentMapper.xml
+   4.service
+     -接口   PaymentService
+     -实现类 PaymentServiceImpl
+   5.controller
+     -PaymentController
