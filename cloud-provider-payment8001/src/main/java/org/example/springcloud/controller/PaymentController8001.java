@@ -3,7 +3,7 @@ package org.example.springcloud.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.example.springcloud.entities.CommonResult;
 import org.example.springcloud.entities.Payment;
-import org.example.springcloud.service.impl.PaymentServiceImpl8002;
+import org.example.springcloud.service.impl.PaymentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -18,7 +18,7 @@ import java.util.List;
 public class PaymentController8001 {
 
     @Autowired
-    private PaymentServiceImpl8002 paymentServiceImpl8002;
+    private PaymentServiceImpl paymentServiceImpl;
 
     @Value("${server.port}")
     private String serverPort;
@@ -28,7 +28,7 @@ public class PaymentController8001 {
 
     @PostMapping(value = "/payment/create")
     public CommonResult create(@RequestBody Payment payment) {
-        int result = paymentServiceImpl8002.create(payment);
+        int result = paymentServiceImpl.create(payment);
         log.info("*****插入结果: " + result);
         if(result > 0) {
             return new CommonResult(200,"插入数据库成功,serverPort: " + serverPort,result);
@@ -39,7 +39,7 @@ public class PaymentController8001 {
 
     @GetMapping(value = "/payment/get/{id}")
     public CommonResult getPaymentById(@PathVariable("id") Long id) {
-        Payment payment = paymentServiceImpl8002.getPaymentById(id);
+        Payment payment = paymentServiceImpl.getPaymentById(id);
         log.info("*****插入结果: " + payment);
         if(payment != null) {
             return new CommonResult(200,"查询成功,serverPort: " + serverPort,payment);
@@ -57,7 +57,7 @@ public class PaymentController8001 {
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
         for (ServiceInstance instance : instances) {
             log.info(instance.getServiceId() + "\t" + instance.getHost() + "\t" + instance.getPort()
-            + "\t" + instance.getUri());
+                    + "\t" + instance.getUri());
         }
         return this.discoveryClient;
     }
