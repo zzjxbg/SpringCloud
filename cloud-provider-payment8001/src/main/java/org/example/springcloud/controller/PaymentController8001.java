@@ -72,7 +72,7 @@ public class PaymentController8001 {
     public String paymentFeignTimeout() {
         try {
             TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return serverPort;
