@@ -13,6 +13,10 @@ import javax.annotation.Resource;
 
 @RestController
 @Slf4j
+/**
+ * 避免每个业务方法配置一个服务降级方法
+ * 通用服务降级和独享的分开,减少冗余代码
+ */
 @DefaultProperties(defaultFallback = "payment_Global_FallbackMethod")
 public class OrderHystrixController {
 
