@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import org.example.springcloud.entities.CommonResult;
 import org.example.springcloud.entities.Payment;
+import org.example.springcloud.myhandler.CustomerBlockHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,15 @@ public class RateLimitController {
     public CommonResult byUrl()
     {
         return new CommonResult(200,"按url限流测试OK",new Payment(2020L,"serial002"));
+    }
+
+    //CustomerBlockHandler
+    @GetMapping("/rateLimit/customerBlockHandler")
+    @SentinelResource(value = "customerBlockHandler",
+                      blockHandlerClass = CustomerBlockHandler.class,
+                      blockHandler = "handlerException2")
+    public CommonResult customerBlockHandler()
+    {
+        return new CommonResult(200,"按客户自定义",new Payment(2020L,"serial003"));
     }
 }
