@@ -27,8 +27,10 @@ public class FlowLimitController {
     @GetMapping("/testD")
     public String testD()
     {
-        try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
-        log.info("testD 测试RT");
+//        try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
+//        log.info("testD 测试RT");
+        log.info("testD 异常比例");
+        int age = 10/0;
         return "------testD";
     }
 
