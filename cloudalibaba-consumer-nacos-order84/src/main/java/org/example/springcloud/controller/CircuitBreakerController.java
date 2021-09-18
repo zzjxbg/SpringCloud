@@ -21,8 +21,8 @@ public class CircuitBreakerController {
     private RestTemplate restTemplate;
 
     @RequestMapping("/consumer/fallback/{id}")
-    @SentinelResource(value = "fallback") //没有配置
-    //@SentinelResource(value = "fallback",fallback = "handlerFallback") //fallback只负责业务异常
+//    @SentinelResource(value = "fallback") //没有配置
+    @SentinelResource(value = "fallback",fallback = "handlerFallback") //fallback只负责业务异常
     //@SentinelResource(value = "fallback",blockHandler = "blockHandler") //blockHandler只负责sentinel控制台配置违规
 //    @SentinelResource(value = "fallback",fallback = "handlerFallback",blockHandler = "blockHandler",
 //            exceptionsToIgnore = {IllegalArgumentException.class})
@@ -34,5 +34,11 @@ public class CircuitBreakerController {
             throw new NullPointerException ("NullPointerException,该ID没有对应记录,空指针异常");
         }
         return result;
+    }
+
+    //fallback
+    public CommonResult handlerFallback(@PathVariable  Long id,Throwable e) {
+        Payment payment = new Payment(id,"null");
+        return new CommonResult<>(444,"兜底异常handlerFallback,exception内容  "+e.getMessage(),payment);
     }
 }
